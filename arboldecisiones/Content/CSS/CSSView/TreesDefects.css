@@ -1,0 +1,183 @@
+﻿#myImg {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+    #myImg:hover {
+        opacity: 0.7;
+    }
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 20; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (image) */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 50%;
+    max-width: 300px;
+}
+
+.scroll {
+    height: 500px;
+    width: 60%;
+    overflow-y: auto;
+}
+
+/* Modal Content (Video) */
+.modal-contentVideo {
+    margin: auto;
+    display: block;
+    width: 100%;
+    max-width: 800px;
+}
+
+/* Caption of Modal Image */
+#caption {
+    margin: auto;
+    display: block;
+    width: 50%;
+    max-width: 70px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+    max-height:500px;
+}
+
+#lblcaption {
+    margin: auto;
+    display: block;
+    text-align: justify;
+    color: #ffffff;
+    font-family: sans-serif;
+    font-size: 20px;
+}
+
+#pre-caption {
+    height: auto;
+    //max-height: 200px;
+    width: 700px;
+    white-space: pre-line;
+    background-color: #19191900;
+    border: 1px solid #19191900;
+    word-break: break-word;
+}
+
+
+/* Add Animation */
+.modal-content, #caption {
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+    from {
+        -webkit-transform: scale(0)
+    }
+
+    to {
+        -webkit-transform: scale(1)
+    }
+}
+
+@keyframes zoom {
+    from {
+        transform: scale(0)
+    }
+
+    to {
+        transform: scale(1)
+    }
+}
+
+/* The Close Button */
+.close {
+    position: absolute;
+    top: -86px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    opacity: 1;
+}
+
+    .close:hover,
+    .close:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px) {
+    .modal-content {
+        width: 100%;
+    }
+}
+
+
+.displayNone {
+    display: none;
+}
+
+
+.liSlideTo {
+    background: #d4b9b9 !important;
+    border-color: #e8e8e8 !important;
+}
+
+.Subtittle {
+    text-align: center;
+    font-weight: bold;
+}
+
+.carousel {
+    width: 80% !important;
+    margin: auto;
+}
+
+.btn-descripcion {
+    width: 100px;
+    height: 25px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: #fff;
+    background-color: #5397D2;
+    border-color: #2e6da4;
+    border-radius: 6px;
+}
+
+.modal-body {
+    white-space: normal;
+    overflow: auto;
+}
+
+
+#cont-caption {
+    text-align: -webkit-center;
+    margin: 10px;
+}
+
+#bodyModalDescription {
+    text-align: justify;
+    white-space: pre-line;
+    word-break: break-word;
+}
+

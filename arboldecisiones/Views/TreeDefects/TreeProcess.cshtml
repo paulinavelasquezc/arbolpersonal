@@ -1,0 +1,101 @@
+﻿@model arboldecisiones.Models.Category
+
+@{
+    ViewBag.Title = "Selección del proceso";
+}
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script src="~/Scripts/ScriptView/SearchClassification.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+<!--<link href="~/Content/CSS/CSSView/TreeProcess.css" rel="stylesheet" />-->
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
+
+
+<div class="container-fluid py-2">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-9">
+            <div class="card" style="background-image: url(../../Content/Images/System/fondoImagen.jpeg); max-width: 100%; height: auto;">
+                <div class="card-header" style="background-color:#000;">
+                    <div class="row mt-4" style="display: flex; justify-content: center; align-items: center;">
+                        <div class="col-md-3 text-center">
+                            <img class="img-fluid" src="~/Content/Images/System/whitelogo.png" style="max-width:70%" />
+                        </div>
+                        <div class="col-md-9">
+                            <p class="h2 font-weight-bolder text-white" align="right">¡Hola! Bienvenido a</p><p class="h2 font-weight-bolder text-yellow" align="right">la Interfaz de Navegación</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row ms-4">
+                        <div class="col-md-6"></div>
+                        <div class="col-md-6">
+                            <p class="h5 text-white">Primero, escoge el tipo de proceso en el que estás trabajando...</p>
+                        </div>
+                    </div>
+                    <div class="row" style="display: flex; justify-content: center; align-items: center;">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3 me-n4" align="right" style="z-index:1;">
+                            <img class="imgRedonda img-fluid" id="NNPB" src='@Url.Content("~/Content/Images/System/NNPB.jpg")' alt="NNPB" onclick="location.href ='@Url.Action("ListTreeCategories", "TreeCategories")'">
+                        </div>
+                        <div class="col-md-2" align="right" style="background-color:#000; border-radius:10px;">
+                            <p class="h5 text-white">NNPB</p>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                    <br />
+                    <div class="row" style="display: flex; justify-content: center; align-items: center;">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3 me-n4" align="right" style="z-index:1;">
+                            <img class="imgRedonda img-fluid" id="BB" src='@Url.Content("~/Content/Images/System/BB.jpg")' alt="BB" onclick="location.href ='@Url.Action("ListTreeCategories", "TreeCategories")'">
+                        </div>
+                        <div class="col-md-2" align="right" style="background-color:#000; border-radius:10px;">
+                            <p class="h5 text-white">B&B</p>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                    <br />
+                    <div class="row" style="display: flex; justify-content: center; align-items: center;">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3 me-n4" align="right" style="z-index:1;">
+                            <img class="imgRedonda img-fluid" id="P62" src='@Url.Content("~/Content/Images/System/P62.jpg")' alt="P62" onclick="location.href ='@Url.Action("ListTreeCategories", "TreeCategories")'">
+                        </div>
+                        <div class="col-md-2" align="right" style="background-color:#000; border-radius:10px;">
+                            <p class="h5 text-white">P62</p>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </div>
+                <br />
+                <div class="card-footer mb-5 borderYellow">
+                    <a href="http://www.o-i.com/" target="_blank"><img style="width:70%; height:auto;" class="mx-auto d-block img-fluid" src="~/Content/Images/System/MWMwhite.png" alt="Gestión de Clientes" /></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+<script>
+    $("#txtFilter").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '@Url.Action("GetSearchValueDefect", "TreeDefects")',
+                dataType: "json",
+                data: { search: $("#txtFilter").val() },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return { label: item.Name, value: item.Name };
+                    }));
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr);
+                }
+            });
+        }
+    });
+</script>

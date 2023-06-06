@@ -1,0 +1,100 @@
+﻿@model IEnumerable<arboldecisiones.Models.Defect>
+
+
+
+@{
+    ViewBag.Title = "Categorías de envases";
+}
+<div class="container-fluid py-2">
+    <div class="row ">
+        <div class="col-md-1"></div>
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header" style="background-color:#000;">
+                    <div class="row mt-4" style="display: flex; justify-content: center; align-items: center;">
+                        <div class="col-md-3 text-center">
+                            <img class="img-fluid" src="~/Content/Images/System/whitelogo.png" style="max-width:70%" />
+                        </div>
+                        <div class="col-md-9">
+                            <p class="h2 font-weight-bolder text-yellow" align="right">Interfaz de Navegación</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row ms-4">
+                        <div class="col-md-6"></div>
+                        <div class="col-md-6">
+                            <p class="h5 text-white">Después, escoge la categoría del envase en el que estás trabajando…</p>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row" style="display: flex; justify-content: center; align-items: center;">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3 me-n4" align="right" style="z-index:1;">
+                            <img class="imgRedonda img-fluid" id="Alimento" src='@Url.Content("~/Content/Images/System/Alimentos.jpg")' alt="Alimento" onclick="location.href ='@Url.Action("TreeClasificacion", "TreeCategories")'">
+                        </div>
+                        <div class="col-md-2" align="right" style="background-color:#000; border-radius:10px;">
+                            <p class="h5 text-white">Alimento</p>
+                        </div>
+                        <div class="col-md-3 me-n4" align="right" style="z-index:1;">
+                            <img class="imgRedonda img-fluid" id="Cerveza" src='@Url.Content("~/Content/Images/System/Cerveza.jpg")' alt="Cerveza" onclick="location.href ='@Url.Action("TreeClasificacion", "TreeCategories")'">
+                        </div>
+                        <div class="col-md-2" align="right" style="background-color:#000; border-radius:10px;">
+                            <p class="h5 text-white">Cerveza</p>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <br />
+                    <div class="row" style="display: flex; justify-content: center; align-items: center;">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3 me-n4" align="right" style="z-index:1;">
+                            <img class="imgRedonda img-fluid" id="BNA" src='@Url.Content("~/Content/Images/System/NoAlcoholicas.jpg")' alt="BNA" onclick="location.href ='@Url.Action("TreeClasificacion", "TreeCategories")'">
+                        </div>
+                        <div class="col-md-2" align="right" style="background-color:#000; border-radius:10px;">
+                            <p class="h5 text-white">No alcohólicas</p>
+                        </div>
+                        <div class="col-md-3 me-n4" align="right" style="z-index:1;">
+                            <img class="imgRedonda img-fluid" id="Licores" src='@Url.Content("~/Content/Images/System/Licores.jpg")' alt="Licores" onclick="location.href ='@Url.Action("TreeClasificacion", "TreeCategories")'">
+                        </div>
+                        <div class="col-md-2" align="right" style="background-color:#000; border-radius:10px;">
+                            <p class="h5 text-white">Licores</p>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <br />
+                    <div class="row" style="display: flex; justify-content: center; align-items: center;">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3 me-n4" align="right" style="z-index:1;">
+                            <img class="imgRedonda img-fluid" id="Otro" src='@Url.Content("~/Content/Images/System/Otros.jpg")' alt="Otro" onclick="location.href ='@Url.Action("TreeClasificacion", "TreeCategories")'">
+                        </div>
+                        <div class="col-md-2" align="right" style="background-color:#000; border-radius:10px;">
+                            <p class="h5 text-white">Otro</p>
+                        </div>
+                        <div class="col-md-3" align="right">
+
+                        </div>
+                        <div class="col-md-2" align="right" style="background-color:#000; border-radius:10px;">
+
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
+                <br />
+                <div class="card-footer mb-3 borderYellow">
+                    <a href="http://www.o-i.com/" target="_blank"><img style="width:50%; height:auto;" class="mx-auto d-block img-fluid" src="~/Content/Images/System/MWMwhite.png" alt="Gestión de Clientes" /></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+

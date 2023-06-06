@@ -1,0 +1,357 @@
+﻿@model arboldecisiones.ViewModels.ConfigTreeDecisions
+
+@{
+    ViewBag.Title = "NewTree";
+}
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/ScriptView/ConfigTreeDecisions.js"></script>
+<link href="~/Content/CSS/CSSView/ConfigTreeDecisions.css" rel="stylesheet" />
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<script>
+    function ShowImagen(evt, outputID) {
+        var files = evt.files; // FileList object
+        // Obtenemos la imagen del campo "file".
+        for (var i = 0, f; f = files[i]; i++) {
+            //validar si es imagen o video(mp4 - MPEG)
+
+            if ((!f.type.match('image.*')) && (!f.type.match('video/MPEG')) && (!f.type.match('video/mp4'))) {
+                alert("El archivo seleccionado no es valido solo se permite imágenes y vídeo (MPEG,MP4)");
+            } else {
+                //Solo imágenes.
+                if (f.type.match('image.*')) {
+                    var sizeT = FileSize(f.size, "imagen");
+
+                    if (sizeT) {
+
+                        var reader = new FileReader();
+                        reader.onload = (function (theFile) {
+                            return function (e) {
+                                // Insertamos la imagen
+                                document.getElementById(outputID).innerHTML = ['<img class="MeasuredImage" src="', e.target.result, '" title="', escape(theFile.name), '"/>'].join('');
+                            };
+                        })(f);
+
+                        reader.readAsDataURL(f);
+                    }
+                }
+
+                //Solo Video.
+                if (f.type.match('video/MPEG') || f.type.match('video/mp4')) {
+
+                    var sizeT = FileSize(f.size,"video");
+                    if (sizeT) {
+                        var fileUrl = window.URL.createObjectURL(f);
+                        document.getElementById(outputID).innerHTML = ['<video class="MeasuredVideo"controls><source src="', fileUrl, '">.</video>'].join('');
+                    }
+
+                }
+            }
+        }
+    }
+</script>
+
+
+@using (Html.BeginForm("NewTree", "ConfigTreeDecisions", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr style="height:1px;border:none;color:#333;background-color:#333;" />
+        <h3><strong>Defecto</strong></h3>
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div id="divTreeConfiguration">
+            <div class="row">
+                <div class="col-xs-4 col-sm-4 col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TreeConfiguration.DefectID, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownList("DefectID", null, htmlAttributes: new { @class = "form-control" })
+                            <span class="error">Debe Seleccionar una Defecto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TreeConfiguration.LocationID, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownList("LocationID", null, htmlAttributes: new { @class = "form-control" })
+                            <span class="error">Debe Seleccionar una Ubicación</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TreeConfiguration.CategoryID, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })
+                            <span class="error">Debe Seleccionar una Categoría</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-1">Definición:</label>
+                        <div class="col-md-11">
+                            <textarea id="textDefinicion" class="textDefinicion form-control" maxlength="250"></textarea>
+                            <span class="error">Debe de ingresar la definición, mínimo 6 caracteres</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="imageConfig">
+                <label class="control-label">
+                    Imágenes
+                </label>
+                <table class="table table-responsive">
+                    <tr>
+                        <td>Imagen</td>
+                        <td>Descripción</td>
+                        <td>Buscar</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr class="mycontainer" id="mainrowConfig">
+                        <td width="128px">
+                            <output id="listConfig" class="listConfig"></output>
+                            <span class="error">Debe Seleccionar una Imagen</span>
+                        </td>
+                        <td width="700px">
+                            <textarea id="descripcionConfig" class="descripcionConfig form-control" maxlength="250"></textarea>
+                            <span class="error">Debe Ingresar la descripción del campo, mínimo 6 caracteres</span>
+                        </td>
+                        <td width="80px">
+                            <span id="fileSpanConfig" class="btn btn-primary btn-file glyphicon glyphicon-search">
+                                <input type="file" id="filesConfig" class="filesConfig" name="files" onchange="ShowImagen(this,'listConfig')" accept="image/*,.MPEG,.mp4" />
+                            </span>
+                        </td>
+                        <td width="80px">
+                            <input type="button" id="addConfig" value="Agregar" style="width:80px" class="btn btn-success" />
+                        </td>
+                    </tr>
+                </table>
+                <div id="listCausa">
+                    <table class="table table-responsive" id="ConfigImagenAdd"><tbody></tbody></table>
+                    <span id="ConfigError" style="color:red"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <div class="col-md-offset-6 col-md-6">
+                            <input type="button" id="btnAddCause" value="Continuar" class="btn btn-success" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="divTreeDecision" class="divHide">
+
+            <hr style="height:1px;border:none;color:#333;background-color:#333;" />
+            <h3><strong>Causa</strong></h3>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                    <div class="form-group">
+                        <input type="button" id="btnBlockCauses" value="Crear Causa" class="btn btn-success" />
+                        <span class="error">Debe ingresar toda la información de la causa anterior para poder crear otra.</span>
+                    </div>
+                </div>
+            </div>
+            <div id="containerCause" class="containerCause">
+                <p class="accordion">Causa</p>
+                <div class="panel">
+                    <div id="btnRemoveCause" class="btnRemoveCause row text-center" style="display: none;">
+                        <div class="form-group">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <input type="button" id="removeCause" value="Eliminar" class="btn btn-danger" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 heightDiv">
+                            <div class="form-group">
+                                <div class="col-md-1">
+                                    <label class="control-label">Titulo:</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <textarea id="txtTitleCause" class="txtTitleCause form-control" maxlength="50"></textarea>
+                                    <span class="error">Debe ingresar el titulo de la Causa, mínimo 6 caracteres</span>
+                                </div>
+                                <div class="control-label col-md-1">
+                                    <label class="control-label">Activo:</label>
+                                </div>
+                                <div class="col-md-1 checkbox">
+                                    <div class="checkbox">
+                                        <input type="checkbox" checked="checked" class="ckbACtivoCause" name="ckbACtivoCause">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 heightDiv">
+                            <div class="form-group">
+                                <div class="col-md-1">
+                                    <label class="control-label">Descripción:</label>
+                                </div>
+                                <div class="col-md-11">
+                                    <textarea id="textDescriptionCause" class="textDescriptionCause form-control" maxlength="250"></textarea>
+                                    <span class="error">Debe ingresar el descrición de la Causa, mínimo 6 caracteres</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="imageCause">
+                        <h4>
+                            Imagenes de la Causa
+                        </h4>
+                        <table class="tableCause table table-responsive" id="tableCause">
+                            <tr>
+                                <td>Imagen</td>
+                                <td>Descripción</td>
+                                <td>Buscar</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr class="mycontainer" id="mainrowCause">
+                                <td width="128px">
+                                    <output id="listCause" class="listCause"></output>
+                                    <span class="error">Debe Seleccionar una Imagen</span>
+                                </td>
+                                <td width="700px">
+                                    <textarea id="descripcionCause" class="descripcionCause form-control" maxlength="250"></textarea>
+                                    <span class="error">Debe Ingresar la descripción del campo, mínimo 6 caracteres</span>
+                                </td>
+                                <td width="80px">
+                                    <span id="fileSpanCause" class="btn btn-primary btn-file glyphicon glyphicon-search">
+                                        <input type="file" id="filesCause" class="filesCause" name="files" onchange="ShowImagen(this,'listCause')" />
+                                    </span>
+                                </td>
+                                <td width="80px">
+                                    <input type="button" id="addCause" value="Agregar" style="width:80px" class="addCause btn btn-success" />
+                                </td>
+                            </tr>
+                        </table>
+                        <div id="listCausa">
+                            <table class="causeImagenAdd table table-responsive" id="causeImagenAdd"><tbody></tbody></table>
+                            <span id="causeError" style="color:red"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                            <div class="form-group">
+                                <input type="button" id="btnBlockSolution" value="Crear Solución" class="btn btn-success" />
+                                <span class="error">Debe ingresar toda la información de la solución anterior para poder crear otra.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="containerSolution" class="containerSolution">
+                        <p class="accordionIn">Solución</p>
+                        <div class="panelIn">
+                            <div id="btnRemoveSolution" class="btnRemoveSolution row text-center" style="display: none;">
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <input type="button" id="removeSolution" value="Eliminar" class="btn btn-danger" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 heightDiv">
+                                    <div class="form-group">
+                                        <div class="col-md-1">
+                                            <label class="control-label">Titulo:</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <textarea id="txtTitleSolution" class="txtTitleSolution form-control" maxlength="50"></textarea>
+                                            <span class="error">Debe ingresar el titulo de la Solución, mínimo 6 caracteres</span>
+                                        </div>
+                                        <div class="control-label col-md-1">
+                                            <label class="control-label">Activo:</label>
+                                        </div>
+                                        <div class="col-md-1 checkbox">
+                                            <div class="checkbox">
+                                                <input type="checkbox" checked="checked" class="ckbACtivoSolution" name="ckbACtivoSolution">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 heightDiv">
+                                    <div class="form-group">
+                                        <div class="col-md-1">
+                                            <label class="control-label">Descripción:</label>
+                                        </div>
+                                        <div class="col-md-11">
+                                            <textarea id="textDescriptionSolution" class="textDescriptionSolution form-control" maxlength="250"></textarea>
+                                            <span class="error">Debe ingresar el descripción de la Solución , mínimo 6 caracteres</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="imageSolution">
+                                <h4>
+                                    Imagenes de la Solución
+                                </h4>
+                                <table class="tableSolution table table-responsive" id="tableSolution">
+                                    <tr>
+                                        <td>Imagen</td>
+                                        <td>Descripción</td>
+                                        <td>Buscar</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr class="mycontainer" id="mainrowSolution">
+                                        <td width="128px">
+                                            <output id="listSolution" class="listSolution"></output>
+                                            <span class="error">Debe Seleccionar una Imagen</span>
+                                        </td>
+                                        <td width="700px">
+                                            <textarea id="descripcionSolution" class="descripcionSolution form-control" maxlength="250"></textarea>
+                                            <span class="error">Debe Ingresar la descripción del campo, mínimo 6 caracteres</span>
+                                        </td>
+                                        <td width="80px">
+                                            <span id="fileSpanSolution" class="btn btn-primary btn-file glyphicon glyphicon-search">
+                                                <input type="file" id="filesSolution" class="filesSolution" name="files" onchange="ShowImagen(this,'listSolution')" />
+                                            </span>
+                                        </td>
+                                        <td width="80px">
+                                            <input type="button" id="addSolution" value="Agregar" style="width:80px" class="addSolution btn btn-success" />
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div id="listSolucion">
+                                    <table class="solutionImagenAdd table table-responsive" id="solutionImagenAdd"><tbody></tbody></table>
+                                    <span id="SolutionError" style="color:red"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="addedSolution">
+
+                    </div>
+                </div>
+            </div>
+            <div id="addedCause">
+
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <div class="col-md-offset-6 col-md-6">
+                            <input @*type="submit"*@ id="submit" value="Guardar" class="btn btn-success" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

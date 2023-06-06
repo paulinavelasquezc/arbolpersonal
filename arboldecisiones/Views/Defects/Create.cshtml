@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    @*librería del organigrama*@
+    <script src="~/Scripts/ScriptView/Defects.js"></script>
+    <script src="~/Scripts/Plugins/OrgChart/html2canvas.min.js"></script>
+    <link href="~/Content/CSS/CSSView/Defects.css" rel="stylesheet" />
+    @*Iconos de botón*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script>
+        function ShowImagen(evt, outputID) {
+            var files = evt.files; // FileList object
+            // Obtenemos la imagen del campo "file".
+            for (var i = 0, f; f = files[i]; i++) {
+                //validar si es imagen o video(mp4 - MPEG)
+
+                if ((!f.type.match('image.*')) && (!f.type.match('video/MPEG')) && (!f.type.match('video/mp4'))) {
+                    alert("El archivo seleccionado no es valido solo se permite imágenes y vídeo (MPEG,MP4)");
+                } else {
+                    //Solo imágenes.
+                    if (f.type.match('image.*')) {
+                        var sizeT = FileSize(f.size, "imagen");
+
+                        if (sizeT) {
+
+                            var reader = new FileReader();
+                            reader.onload = (function (theFile) {
+                                return function (e) {
+                                    // Insertamos la imagen
+                                    document.getElementById(outputID).innerHTML = ['<img class="MeasuredImage" src="', e.target.result, '" title="', escape(theFile.name), '"/>'].join('');
+                                };
+                            })(f);
+
+                            reader.readAsDataURL(f);
+                        }
+                    }
+
+                    //Solo Video.
+                    if (f.type.match('video/MPEG') || f.type.match('video/mp4')) {
+
+                        var sizeT = FileSize(f.size, "video");
+                        if (sizeT) {
+                            var fileUrl = window.URL.createObjectURL(f);
+                            document.getElementById(outputID).innerHTML = ['<video class="MeasuredVideo" controls><source src="', fileUrl, '">.</video>'].join('');
+                        }
+
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <div>
+            <div>
+                <div class="row">
+                    <div>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <label class="control-label col-md-2">Nombre Ubicación:</label>
+                                <div class="col-md-10">
+                                    @Html.DropDownList("LocationID", null, htmlAttributes: new { @class = "form-control" })
+                                    <span class="error">Debe Seleccionar una nombre Ubicación</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <label class="control-label col-md-2">Nombre Defecto:</label>
+                                <div class="col-md-10">
+                                    <input type="text" name="textDefects" id="textDefects" class="form-control" maxlength="25" />
+                                    <span class="error">Debe de ingresar, mínimo 4 caracteres</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="imageConfig">
+                    <div class="col-md-12">
+                        <table class="table table-responsive" style="margin-bottom: -12px">
+                            <tr>
+                                <td> <label class="control-label">Buscar</label></td>
+                                <td> <label class="control-label">Imagen</label></td>
+                            </tr>
+                            <tr class="mycontainer" id="mainrowConfig">
+
+                                <td width="80px">
+                                    <span id="fileSpanConfig" class="btn btn-primary btn-file glyphicon glyphicon-search">
+                                        <input type="file" id="filesConfig" class="filesConfig" name="files" onchange="ShowImagen(this,'imgCarga')" accept="image/*,.MPEG,.mp4" />
+                                    </span>
+                                </td>
+                                <td width="128px">
+                                    <output id="imgCarga" class="imgCarga"></output>
+                                    <span class="error">Debe Seleccionar una Imagen</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <span id="ConfigError" style="color:red"></span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer" style="border:0px">
+            <button id="btnAdd" type="button" class="btn btn-secondary"><i class="fa fa-arrow-circle-right fa-1x"></i> Guardar</button>
+        </div>
+    </div>
+</body>
+</html>
+<p>
+    @Html.ActionLink("Regresar", "Index", null, new { @class = "btn-back" })
+</p>

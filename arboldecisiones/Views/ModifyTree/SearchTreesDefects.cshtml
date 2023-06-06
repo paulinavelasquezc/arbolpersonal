@@ -1,0 +1,144 @@
+﻿@model  IEnumerable<arboldecisiones.ViewModels.TreesDefects>
+<link href="~/Content/CSS/CSSView/SearchTreesDefects.css" rel="stylesheet" />
+<script src="~/Scripts/ScriptView/SearchTreesDefects.js"></script>
+
+<style>
+    /* The heart of the matter */
+    .testimonial-group > .row {
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+        .testimonial-group > .row > .col-xs-12 {
+            display: inline-block;
+            float: none;
+        }
+</style>
+<h4 class="Subtittle"> Defectos</h4>
+<div class="testimonial-group col-xs-12 col-sm-12 col-md-12">
+    <div class="row text-center">
+        @foreach (var elem in Model)
+        {
+            <div class="gallery col-xs-12">
+                @*galeria*@
+                <div class="container">
+                    <div style="white-space: normal;"> <h4 class="text-center">@elem.TreeConfiguration.Location.Name</h4></div>
+                    <div style="white-space: normal;"> <h4 class="text-center">@elem.TreeConfiguration.Defect.Name</h4></div>
+                    <a href="@Url.Action("ModifyTreeOrgChart", "ModifyTree", new { _treeConfigurationID = @elem.TreeConfiguration.TreeConfigurationID })">
+                        Modificar
+                    </a>
+                    <div id="myCarousel-@elem.TreeConfiguration.TreeConfigurationID" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            @for (int c = 0; c < elem.TreeMultimedia.Count; c++)
+                            {
+                                if (c == 0)
+                                {
+                                    <li data-target="#myCarousel-@elem.TreeConfiguration.TreeConfigurationID" data-slide-to="@c" class="active"></li>
+                                }
+                                else
+                                {
+                                    <li data-target="#myCarousel-@elem.TreeConfiguration.TreeConfigurationID" data-slide-to="@c"></li>
+                                }
+                            }
+                        </ol>
+                        <!-- Wrapper for slides -->                        
+                        <div class="carousel-inner">
+                            @for (int i = 0; i < elem.TreeMultimedia.Count; i++)
+                            {
+                                if (i == 0)
+                                {
+                                    <div class="item active">
+                                        <div id="panelMultimedia" class="panelMultimedia">
+                                            @if (elem.TreeMultimedia[i].Type == "Image")
+                                            {
+                                                <img class="MeasuredImage" src="@Url.Content(elem.TreeMultimedia[i].Url)" alt="Image" onclick="ShowModalMultimedia(this,'Image','@HttpUtility.JavaScriptStringEncode(@elem.TreeMultimedia[i].Description)')">
+                                            }
+                                            else
+                                            {
+                                                <video onclick="ShowModalMultimedia(this,'Video','@HttpUtility.JavaScriptStringEncode(@elem.TreeMultimedia[i].Description)')"><source src="@Url.Content(elem.TreeMultimedia[i].Url)" /></video>
+                                            }
+                                        </div>
+                                        <div class="carousel-caption">
+                                            @*<p>@elem.TreeMultimedia[i].Description</p>*@
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="item">
+                                        <div id="panelMultimedia" class="panelMultimedia">
+                                            @if (elem.TreeMultimedia[i].Type == "Image")
+                                            {
+                                                <img class="MeasuredImage" src="@Url.Content(elem.TreeMultimedia[i].Url)" alt="Imagen" onclick="ShowModalMultimedia(this,'Image','@HttpUtility.JavaScriptStringEncode(@elem.TreeMultimedia[i].Description)')">
+                                            }
+                                            else
+                                            {
+                                                <video onclick="ShowModalMultimedia(this,'Video','@HttpUtility.JavaScriptStringEncode(@elem.TreeMultimedia[i].Description)')"><source src="@Url.Content(elem.TreeMultimedia[i].Url)" /></video>
+                                            }
+                                            <div class="carousel-caption">
+                                                @*<p>@elem.TreeMultimedia[i].Description</p>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                        @*</a>*@
+
+                        <!-- Left and right controls -->
+                        <a class="left carousel-control" href="#myCarousel-@elem.TreeConfiguration.TreeConfigurationID" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#myCarousel-@elem.TreeConfiguration.TreeConfigurationID" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+                @*fin galeria*@
+                <button type="button" onclick="ShowModalDescription('@HttpUtility.JavaScriptStringEncode(@elem.TreeConfiguration.Defect.Name)','@HttpUtility.JavaScriptStringEncode(@elem.TreeConfiguration.Definition)')" class="btn-descripcion" data-toggle="modal">
+                    Descripción
+                </button>
+            </div>
+        }
+    </div>
+</div>
+<!-- The Modal -->
+<div id="ImageModal" @*onclick="CloseModalMultimedia()"*@ class="modal">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <span onclick="CloseModalMultimedia()" class="close">&times;</span>
+            </div>
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8 scroll">
+            <div id="cont-caption">
+                <pre id="pre-caption">
+                <label id="lblcaption"></label>
+        </pre>
+            </div>
+        </div>
+
+        <div class="col-xs-4 col-sm-4 col-md-4">
+
+            <img class="modal-content displayNone MeasuredImageScreem " id="imgShowImage">
+            <video class="modal-contentVideo displayNone MeasuredImageScreem" id="imgShowVideo" controls><source /></video>
+        </div>
+        </div>
+    </div>
+
+    <div id="ModalDescripcion" onclick="CloseModalDescription()" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close CloseDesription" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="titleModalDescription"></h5>
+            </div>
+            <div class="modal-body" id="bodyModalDescription">
+            </div>
+        </div>
+    </div>

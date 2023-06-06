@@ -1,0 +1,150 @@
+﻿@model arboldecisiones.Models.Category
+
+@{
+    ViewBag.Title = "Descripción del defecto";
+}
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script src="~/Scripts/ScriptView/SearchClassification.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+<!--<link href="~/Content/CSS/CSSView/TreeProcess.css" rel="stylesheet" />-->
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
+
+<div class="container-fluid py-2">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header" style="background-color:#000;">
+                    <div class="row mt-4" style="display: flex; justify-content: center; align-items: center;">
+                        <div class="col-md-3 text-center">
+                            <img src="~/Content/Images/System/whitelogo.png" style="max-width:70%" />
+                        </div>
+                        <div class="col-md-9">
+                            <p class="h2 font-weight-bolder text-yellow" align="right">Interfaz de Navegación</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!--<div class="row ms-4">
+                        <!--<div class="col-md-6"></div>-
+                        <div class="col-md-12 text-center">
+                            <p class="h5 text-white">Descripción del defecto</p>
+                        </div>
+                    </div>-->
+                    <div class="row text-center">
+                        <p class="h4 font-weight-bolder text-yellow">Cerveza - Cuello - Grieta</p>
+                    </div>
+                    <br />
+                    <div class="row text-center justify-content-center">
+                        <div class="col-md-6 align-items-center">
+                            <img class="img-fluid" src='@Url.Content("~/Content/Images/System/Cerveza.jpg")' style="max-width:60%; height:auto; border-radius:10px;">
+                            <BR />
+                            <h5 class="h5 text-white">Grieta</h5>
+                        </div>
+                        <div class="col-md-6 text-left align-items-center" align="left">
+                            <h5 class="h5 text-yellow text-left">Descripción del defecto:</h5>
+                            <p class="h5 text-white text-left">
+                                THIS IS BECAUSE
+                                We continue to reinvent the process of turning sand into glass through
+                                innovative technology. We are continually motivated by our belief that
+                                glass is not only the kindest material for the planet, but also by the idea
+                                that...
+                            </p>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row text-center">
+                        <div class="col-md-6">
+                            <h5 class="h5 text-yellow text-left">Tipos de grietas:</h5>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">1.1 Grieta bajo el anillo</a>
+                            <br />
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">1.2 Grieta bajo el anillo</a>
+                            <br />
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">1.3 Grieta bajo el anillo</a>
+                        </div>
+                        <div class="col-md-2">
+                            <img class="img-fluid" id="P62" src='@Url.Content("~/Content/Images/System/NNPB.jpg")' style="max-width:80%; height:auto; border-radius:10px;">
+                            <BR />
+                            <h5 class="h5 text-white">1.1</h5>
+                        </div>
+                        <div class="col-md-2">
+                            <img class="img-fluid" id="P62" src='@Url.Content("~/Content/Images/System/NNPB.jpg")' style="max-width:80%; height:auto; border-radius:10px;">
+                            <BR />
+                            <h5 class="h5 text-white">1.2</h5>
+                        </div>
+                        <div class="col-md-2">
+                            <img class="img-fluid" id="P62" src='@Url.Content("~/Content/Images/System/NNPB.jpg")' style="max-width:80%; height:auto; border-radius:10px;">
+                            <BR />
+                            <h5 class="h5 text-white">1.3</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer mb-3 borderYellow">
+                    <a href="http://www.o-i.com/" target="_blank"><img style="width:50%; height:auto;" class="mx-auto d-block img-fluid" src="~/Content/Images/System/MWMwhite.png" alt="Gestión de Clientes" /></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Causas del defecto</h5>
+                <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row text-center" style="justify-content:center;">
+                    <div class="col-md-6" style="align-items:center;">
+                        <img class="img-fluid" id="NNPB" src='@Url.Content("~/Content/Images/System/Cerveza.jpg")' style="max-width:70%; height:auto; border-radius:10px;" alt="NNPB">
+                        <BR />
+                        <h5 class="h5 text-white">Grieta bajo el anillo</h5>
+                    </div>
+                    <div class="col-md-6 text-left" style="align-items:center;" align="left">
+                        <h5 class="h5 text-yellow text-left">Descripción del defecto:</h5>
+                        <p class="h5 text-white text-left">
+                            THIS IS BECAUSE
+                            We continue to reinvent the process of turning sand into glass through
+                            innovative technology. We are continually motivated by our belief that
+                            glass is not only the kindest material for the planet, but also by the idea
+                            that...
+                        </p>
+                    </div>
+                </div>
+                <br />
+                <div class="row text-center">
+                    <div class="col-md-12">
+                        <h5 class="h5 text-yellow text-left">Posibles causas:</h5>
+                        <a href="#">1. Causa a</a>
+                        <br />
+                        <a href="#">2. Causa b</a>
+                    </div>
+                </div>
+                <br />
+                <div class="row text-center">
+                    <div class="col-md-12">
+                        <video src="https://www.youtube.com/watch?v=D8vT7G0WATM&t=5s" width="300" height="200" controls></video>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

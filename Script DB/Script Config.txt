@@ -1,0 +1,58 @@
+INSERT INTO [dbo].[AspNetUsers]  VALUES (N'f550129a-d1f4-4aee-8b0f-abf86a97cb4b', N'Administrador', N'admin', N'123456789', N'1', N'2018-10-23 15:19:07.620', N'1', N'admin@gestiondeclientes.info', N'0', N'AAPYOh/D3Lupj36LyM/HglF4K8GlGWRgvXa7nDVnBYhvTQ1qGf0jTv2UqxoVgVrm8Q==', N'3a313073-2927-453b-b2da-93dbce5749c9', NULL, N'0', N'0', NULL, N'1', N'0', N'admin')
+
+INSERT INTO [dbo].[AspNetRoles]([Id], [Name]) VALUES (N'ab36f5ec-f3af-4414-aec1-97495f4da1d1', N'Administrador');
+INSERT INTO [dbo].[AspNetRoles]([Id], [Name]) VALUES (N'826e2cbe-dd5b-4a41-875c-e0c24e768b41', N'Consultor');
+INSERT INTO [dbo].[AspNetRoles]([Id], [Name]) VALUES (N'da2f6ae3-720d-4503-a0da-e8beae3e9618', N'Operador');
+
+
+INSERT INTO [dbo].[AspNetUserRoles]([UserId], [RoleId]) VALUES (N'f550129a-d1f4-4aee-8b0f-abf86a97cb4b', N'ab36f5ec-f3af-4414-aec1-97495f4da1d1');
+
+
+
+SET IDENTITY_INSERT Categories ON
+INSERT INTO [dbo].[Categories]([CategoryID], [Name], [Active], [UserID], [UpdateDate]) VALUES (1, N'CRITICO', '0', N'f550129a-d1f4-4aee-8b0f-abf86a97cb4b', '2018-10-01 00:00:00.000');
+INSERT INTO [dbo].[Categories]([CategoryID], [Name], [Active], [UserID], [UpdateDate]) VALUES (2, N'MAYOR', '0', N'f550129a-d1f4-4aee-8b0f-abf86a97cb4b', '2018-10-01 00:00:00.000');
+INSERT INTO [dbo].[Categories]([CategoryID], [Name], [Active], [UserID], [UpdateDate]) VALUES (3, N'MENOR', '0', N'f550129a-d1f4-4aee-8b0f-abf86a97cb4b', '2018-10-01 00:00:00.000');
+SET IDENTITY_INSERT Categories OFF
+
+
+SET IDENTITY_INSERT Types ON
+INSERT INTO [dbo].[Types]([TypeID], [Name]) VALUES (1, N'CAUSA');
+INSERT INTO [dbo].[Types]([TypeID], [Name]) VALUES (2, N'SOLUCIÓN');
+INSERT INTO [dbo].[Types]([TypeID], [Name]) VALUES (3, N'DECISIÓN');
+INSERT INTO [dbo].[Types]([TypeID], [Name]) VALUES (4, N'UNIÓN');
+SET IDENTITY_INSERT Types OFF
+
+--
+
+
+
+
+
+
+
+INSERT INTO [dbo].[Defects]([DefectID], [Name], [Active], [UserID], [UpdateDate]) VALUES (1, N'Cuerda de pájaro', '1', N'f550129a-d1f4-4aee-8b0f-abf86a97cb4b', '2018-11-07 08:44:28.990');
+INSERT INTO [dbo].[Defects]([DefectID], [Name], [Active], [UserID], [UpdateDate]) VALUES (2, N'Aguja en el Fondo', '0', N'f550129a-d1f4-4aee-8b0f-abf86a97cb4b', '2018-11-07 08:44:19.007');
+INSERT INTO [dbo].[Defects]([DefectID], [Name], [Active], [UserID], [UpdateDate]) VALUES (3, N'Arruga de Prensa', '0', N'f550129a-d1f4-4aee-8b0f-abf86a97cb4b', '2018-11-09 15:25:52.017');
+
+INSERT INTO [dbo].[Locations]([LocationID], [Name], [Active], [UserID], [UpdateDate]) VALUES (1, N'TERMINADO', '0', N'f550129a-d1f4-4aee-8b0f-abf86a97cb4b', '2018-11-07 08:45:37.903');
+INSERT INTO [dbo].[Locations]([LocationID], [Name], [Active], [UserID], [UpdateDate]) VALUES (2, N'CUELLO', '0', N'Admin', '2018-10-01 00:00:00.000');
+INSERT INTO [dbo].[Locations]([LocationID], [Name], [Active], [UserID], [UpdateDate]) VALUES (3, N'HOMBRO', '0', N'Admin', '2018-10-01 00:00:00.000');
+INSERT INTO [dbo].[Locations]([LocationID], [Name], [Active], [UserID], [UpdateDate]) VALUES (4, N'CUERPO', '0', N'Admin', '2018-10-01 00:00:00.000');
+INSERT INTO [dbo].[Locations]([LocationID], [Name], [Active], [UserID], [UpdateDate]) VALUES (5, N'FONDO', '0', N'Admin', '2018-10-01 00:00:00.000');
+INSERT INTO [dbo].[Locations]([LocationID], [Name], [Active], [UserID], [UpdateDate]) VALUES (99, N'GENERAL', '0', N'f550129a-d1f4-4aee-8b0f-abf86a97cb4b', '2018-11-07 08:45:37.903');
+
+
+
+
+
+
+
+
+
+INSERT INTO [dbo].[Locations]([LocationID], [Name], [Active], [UserID], [UpdateDate]) VALUES (6, N'FONDO', '0', N'Admin', '2020-09-01 00:00:00.000');
+
+UPDATE Locations
+SET Name = 'TALON'
+WHERE LocationID = 5;
+

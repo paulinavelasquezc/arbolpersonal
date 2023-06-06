@@ -1,0 +1,176 @@
+﻿input,
+select,
+textarea {
+    resize: none;
+}
+/*Tamaño de la iamgen a subir*/
+.MeasuredImage {
+    height: 150px;
+    width: 259px;
+    border: 0px solid #000;
+    margin: -14px 11px 6px 0;
+}
+
+.MeasuredVideo {
+    height: 150px;
+    width: 259px;
+}
+
+
+/*centar ajutar div*/
+.adjustDiv {
+    display: flex;
+    align-items: center;
+}
+
+/*File Upload*/
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    cursor: inherit;
+    display: block;
+}
+/*----*/
+
+span.error {
+    display: block;
+    visibility: hidden;
+    color: red;
+    font-size: 90%;
+}
+
+tr.error {
+    background-color: rgba(255,0,0,0.35);
+}
+
+/*Ocultar div*/
+
+.divHide {
+    display: none;
+    /*display: block;*/
+}
+
+/*Mostrar div*/
+
+.divShow {
+    display: block;
+}
+.heightDiv {
+    /*height: 67px;*/
+}
+
+/* Style the element that is used to open and close the accordion class */
+p.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    margin-bottom: 10px;
+}
+
+    /* Add a background color to the accordion if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+    p.accordion.active, p.accordion:hover {
+        background-color: #ddd;
+    }
+
+    /* Unicode character for "plus" sign (+) */
+    p.accordion:after {
+        content: '\2795';
+        font-size: 13px;
+        color: #777;
+        float: right;
+        margin-left: 5px;
+    }
+
+    /* Unicode character for "minus" sign (-) */
+    p.accordion.active:after {
+        content: "\2796";
+    }
+
+/* Style the element that is used for the panel class */
+
+div.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: 0.4s ease-in-out;
+    opacity: 0;
+    margin-bottom: 10px;
+}
+
+    div.panel.show {
+        opacity: 1;
+        /*overflow: auto;*/
+        max-height: 100%; /* Whatever you like, as long as its more than the height of the content (on all screen sizes) */                
+    }
+
+
+/* Style the element that is used to open and close the accordion in class */
+p.accordionIn {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    margin-bottom: 10px;
+}
+
+    /* Add a background color to the accordion if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+    p.accordionIn.active, p.accordionIn:hover {
+        background-color: #ddd;
+    }
+
+    /* Unicode character for "plus" sign (+) */
+    p.accordionIn:after {
+        content: '\2795';
+        font-size: 13px;
+        color: #777;
+        float: right;
+        margin-left: 5px;
+    }
+
+    /* Unicode character for "minus" sign (-) */
+    p.accordionIn.active:after {
+        content: "\2796";
+    }
+
+/* Style the element that is used for the panel class */
+
+div.panelIn {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: 0.4s ease-in-out;
+    opacity: 0;
+    margin-bottom: 10px;
+}
+
+    div.panelIn.show {        
+        opacity: 1;
+        /*overflow: auto;*/
+        max-height: 100%; /* Whatever you like, as long as its more than the height of the content (on all screen sizes) */
+    }

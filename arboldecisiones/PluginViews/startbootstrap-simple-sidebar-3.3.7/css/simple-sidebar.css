@@ -1,0 +1,210 @@
+/*!
+ * Start Bootstrap - Simple Sidebar (http://startbootstrap.com/)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ */
+
+ body {
+    overflow-x: hidden;
+ }
+
+/* Toggle Styles */
+
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    padding-top: 30px;
+}
+
+#wrapper.toggled {
+    padding-left: 250px;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    /*position: fixed;*/
+    left: 250px;
+    width: 0;
+    height: 100%;
+    margin-left: -220px;
+    overflow-y: auto;
+    background: #eee;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    border-radius: 10px;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: static;
+    margin-right: -250px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    position: absolute;
+    width: 16%;
+    margin-left: 10px;
+    /* margin-right: 10px; */
+    list-style: none;
+    background-color: #eee;
+    border-radius: 10px;
+    padding-right: 30px;
+    padding-left: 10px;
+   
+
+    left: 0 !important; /* Posicionamos la cabecera al lado izquierdo */
+    position: fixed !important; /* Hacemos que la cabecera tenga una posición fija */
+
+}
+
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 30px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: black;
+}
+
+.sidebar-nav li a:hover {
+        text-decoration: none;
+        color: lightslategray;
+        background: rgba(255,255,255,0.2);
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+    height: 65px;
+    font-size: 18px;
+    line-height: 80px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+    color: #999999;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+    color: red;
+    background: none;
+}
+
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 200px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        width: 250px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+    }
+
+    #page-content-wrapper {
+        padding: 20px;
+        position: relative;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+}
+
+.menu {
+    border-radius: 10px;
+}
+
+#access {
+    width: 16%;
+    display: block; 
+    position: fixed !important; /* Hacemos que la cabecera tenga una posición fija */
+}
+
+    #access ul { /* accordion lists */
+        list-style: none; /* remove bullets */
+        margin: 0 auto; /* center and margin */
+        display: block; /* display type block */
+        width: 100%; /* stretch to full width of container */
+        overflow: hidden; /* prevent margin wisk */
+
+    }
+
+        #access ul li { /* accordion list items */
+            background-color: #2C8DB7; /* BACKGROUND COLOR */
+            color: #FFF; /* LIST ITEM TEXT COLOR */
+            position: relative; /* set position relative for accordion menu items */
+            float: left; /* float items left */
+            width: 100%; /* set to width of container */
+            border-bottom-width: 1px; /* add a slight border to bottom of menus */
+            border-bottom-style: solid; /* solid line */
+            border-bottom-color: #CCC; /* color of border */
+        }
+
+            #access ul li a { /* accordion list item links */
+                color: #FFF; /* LINK TEXT COLOR */
+                display: block; /* display type block */
+                padding: 5px; /* add padding all around */
+                font-weight: 600; /* increase font weight */
+                text-decoration: none; /* get rid of underline */
+            }
+
+    #access li > ul { /* accordion menu items */
+        display: block; /* display menu items on hover */
+        height: 0; /* initially hide menu items */
+        -webkit-transition: all 500ms cubic-bezier(0.250, 0.100, 0.250, 1.000);
+        -moz-transition: all 500ms cubic-bezier(0.250, 0.100, 0.250, 1.000);
+        -ms-transition: all 500ms cubic-bezier(0.250, 0.100, 0.250, 1.000);
+        -o-transition: all 500ms cubic-bezier(0.250, 0.100, 0.250, 1.000);
+        transition: all 500ms cubic-bezier(0.250, 0.100, 0.250, 1.000); /* ease (default) */
+        background-color: #2C8DB7; /* default background of old default viewport - #A0A0A0 */
+    }
+
+    #access li:hover > ul { /* accordion menu items - on hover */
+        height: 47px; /* set initial height of accordion opening */
+        overflow: visible; /* show overflow beyond set height */
+    }
+
+    #access li ul > li a { /* accordion menu item links */
+        background-color: #FEFEFE; /* MENU ITEM LINK BACKGROUND COLOR */
+        color: #000; /* MENU ITEM LINK TEXT COLOR */
+        font-weight: 400; /* reset normal font weight */
+        padding: 5px; /* repad menu item links */
+    }
+
+    #access li ul > li:nth-of-type(odd) a { /* accordion menu item links (odd) */
+        background-color: #DDF; /* MENU ITEM LINK BACKGROUND COLOR - ODD */
+    }
+
+    #access li ul > li a:hover { /* accordion menu item links - on hover */
+        background-color: #fc0; /* MENU ITEM LINK BACKGROUND COLOR - ON HOVER */
+        color: #000; /* MENU ITEM LINK TEXT COLOR - ON HOVER */
+        font-weight: 600; /* increase font weight */
+    }

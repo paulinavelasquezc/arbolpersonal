@@ -1,0 +1,100 @@
+﻿@model arboldecisiones.Models.Category
+
+@{
+    ViewBag.Title = "SearchClassification";
+}
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script src="~/Scripts/ScriptView/SearchClassification.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+<link href="~/Content/CSS/CSSView/SearchClassification.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
+
+<h3>Clasificación Búsqueda</h3>
+<div class="row text-right">
+    <div class="adjustDiv">
+        <div class="col-xs-6 col-sm-6 col-md-6">
+            @Html.LabelFor(model => model.CategoryID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6">
+            @*@Html.Label("Filtro", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBox("txtFilter", null, new { @class = "form-control" })*@
+            <div class="input-group">
+                <input type="text" class="form-control" id="txtFilter" placeholder="Buscar Defectos">
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary" type="button" id="btnFilter">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+            @*</div>*@
+        </div>
+    </div>
+</div>
+<div class="row div-container">
+    <div class="col-xs-2 col-sm-2 col-md-2 text-center">
+
+        <br />
+        <div>
+            <div>
+                <button id="General" onclick="ViewParcialDefectos(99)">General</button>
+            </div>
+            <div>
+                <img id="Boca" src='@Url.Content("~/Content/Images/System/BocaFlint.png")' alt="Boca" onclick="ViewParcialDefectos(1)" style="cursor: pointer">
+            </div>
+            <div>
+                <img id="Cuello" src='@Url.Content("~/Content/Images/System/CuelloFlint.png")' alt="Cuello" onclick="ViewParcialDefectos(2)" style="cursor: pointer">
+            </div>
+            <div>
+                <img id="Hombro" src='@Url.Content("~/Content/Images/System/HombroFlint.png")' alt="Hombro" onclick="ViewParcialDefectos(3)" style="cursor: pointer">
+            </div>
+            <div>
+                <img id="Cuerpo" src='@Url.Content("~/Content/Images/System/CuerpoFlint.png")' alt="Cuerpo" onclick="ViewParcialDefectos(4)" style="cursor: pointer">
+            </div>
+            <div>
+                <img id="Talon" src='@Url.Content("~/Content/Images/System/FondoFlint.png")' alt="Talon" onclick="ViewParcialDefectos(5)" style="cursor: pointer">
+            </div>
+            <div>
+                <img id="Fondo" src='@Url.Content("~/Content/Images/System/FondoA.png")' style="cursor: pointer; width: 108px; height:104px" alt="Fondo" onclick="ViewParcialDefectos(6)">
+            </div>
+            @*<div>
+                    <button id="btnFlint" class="btnBottleUsually" title="Flint" type="button"></button>
+                    <button id="btnVerde" class="btnBottleUsually" title="Verde" type="button"></button>
+                    <button id="btnAmbar" class="btnBottleUsually" title="Ambar" type="button"></button>
+                </div>*@
+        </div>
+    </div>
+    <div class="col-xs-10 col-sm-10 col-md-10">
+        <div id="ViewParcial">
+        </div>
+    </div>
+</div>
+<script>
+    $("#txtFilter").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '@Url.Action("GetSearchValueDefect", "TreeDefects")',
+                dataType: "json",
+                data: { search: $("#txtFilter").val() },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return { label: item.Name, value: item.Name };
+                    }));
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr);
+                }
+            });
+        }
+    });
+</script>

@@ -1,0 +1,144 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+.navbar-personalize {
+    background-color: black !important;
+    z-index:20;
+    width: 100% !important; /* hacemos que la cabecera ocupe el ancho completo de la página */
+    left: 0 !important; /* Posicionamos la cabecera al lado izquierdo */
+    top: 0 !important; /* Posicionamos la cabecera pegada arriba */
+    position: fixed !important; /* Hacemos que la cabecera tenga una posición fija */
+    
+}
+
+.navbar-brand-personalize {
+    color: white !important;
+    font-size: xx-large !important;
+}
+
+.navbar-nav-personalize > li > a:hover {
+    color: #777 !important;
+}
+
+.navbar-nav-personalize > li > a:focus {
+    color: black !important;
+}
+
+.navbar-nav-personalize > li > a {
+    color: white !important;
+    font-size: large !important;
+}
+
+
+.container-fluid-personalize {
+    padding-right: 5% !important;
+}
+
+
+.center-img-peldar {
+    height: 210px;
+    width: 270px;
+    display: block;
+    margin: 10px auto;
+}
+
+
+.center-img-gc {
+    height: 30px;
+    width: 90px;
+    padding-left: 5px;
+}
+
+.container {
+    width: 100% !important;
+}
+
+.footer-perzonalice {
+    position: absolute;
+    width: 180px;
+    margin-left: 10px;
+    /* margin-right: 10px; */
+    list-style: none;
+    border-radius: 10px;
+    padding-right: 30px;
+    padding-left: 10px;
+    left: 0 !important; /* Posicionamos la cabecera al lado izquierdo */
+    top: 530px;
+    position: fixed !important; /* Hacemos que la cabecera tenga una posición fija */
+}
+
+
+.btn-create {
+    background: url(Images/System/Add.png) no-repeat top left;
+    display: block;
+    width: 20px;
+    height: 20px;
+    text-indent: -9999px; /* hides the link text */
+}
+
+.btn-back {
+    background: url(Images/System/Back.png) no-repeat top left;
+    display: block;
+    width: 100px;
+    height: 100px;
+    text-indent: -9999px; /* hides the link text */
+}
+
+.btn-edit {
+    background: url(Images/System/Edit.png) no-repeat top left;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    text-indent: -9999px; /* hides the link text */
+
+}
+
+.btn-delete {
+    background: url(Images/System/Delete.png) no-repeat top left;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    text-indent: -9999px; /* hides the link text */
+}
+
+.btn-details {
+    background: url(Images/System/Details.png) no-repeat top left;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    text-indent: -9999px; /* hides the link text */
+}
+
+.div-images {
+    background-color: #ffffff;
+    float: left;
+    width: 100%;
+    text-align: left;
+}
+
+h3 {
+    margin-top: 0px !important;
+}
+
+
+/* Set width on the form input elements since they're 100% wide by default */
+/*input,
+select,
+textarea {
+    max-width: 280px;
+}*/

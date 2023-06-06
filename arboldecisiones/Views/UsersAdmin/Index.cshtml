@@ -1,0 +1,81 @@
+﻿@model IEnumerable<arboldecisiones.ViewModels.UserViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>Usuarios</h3>
+
+<p>
+    @Html.ActionLink("Crear", "Create", null, new { @class = "btn-create" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Acciones
+        </th>
+        <th>
+            Código
+        </th>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Apellido
+        </th>
+        <th>
+            Usuario
+        </th>
+        <th>
+            Maquina
+        </th>
+        <th>
+            Correo Electrónico
+        </th>
+        <th>
+            Actualización
+        </th>
+        <th>
+            Activo
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            <div class="div-images">
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn-edit" })
+                @Html.ActionLink("Detalle", "Details", new { id = item.Id }, new { @class = "btn-details" })
+                @*@Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn-delete" })*@
+            </div>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Identity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MachineID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UpdateDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Active)
+        </td>
+
+    </tr>
+    }
+
+</table>

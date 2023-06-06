@@ -1,0 +1,115 @@
+﻿#chart-container {
+    position: relative;
+    height: 420px;    
+    border: 2px dashed #aaa;
+    border-radius: 14px;
+    overflow: auto;   
+}
+
+.orgchart {
+    background: #fff;
+    padding: 20px;
+}
+
+input,
+select,
+textarea {
+    resize: none;
+}
+/*Tamaño de la iamgen a subir*/
+.MeasuredImage {
+    width: auto;
+    height: auto;
+    max-width: 120px;
+    max-height: 100px;
+    border: 0px solid #000;
+    margin: -14px 11px 6px 0;
+}
+
+.MeasuredVideo {
+    height: 150px;
+    width: 259px;
+}
+
+
+/*centar ajutar div*/
+.adjustDiv {
+    display: flex;
+    align-items: center;
+}
+
+/*File Upload*/
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+    .btn-file input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        cursor: inherit;
+        display: block;
+    }
+/*----*/
+
+span.error {
+    display: block;
+    visibility: hidden;
+    color: red;
+    font-size: 90%;
+}
+
+tr.error {
+    background-color: rgba(255,0,0,0.35);
+}
+
+
+.titlesMain {
+    font-size: 20px;
+}
+
+.btnStyleIco {
+    background-color: DodgerBlue;
+    border: none;
+    color: white;
+    padding: 3px 9px;
+    border-radius: 24px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Darker background on mouse-over */
+.btnStyleIco:hover {
+    background-color: RoyalBlue;
+}
+
+.modal-header .close {
+    margin-top: 2px !important;
+}
+
+.modal-header {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.spacing {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.separator {
+    height: 1px;
+    background-color: lightgray;
+    width: 100%;
+}
+
+.txt-tittle {
+    height: 35px !important;
+}

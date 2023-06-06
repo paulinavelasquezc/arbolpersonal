@@ -1,0 +1,438 @@
+﻿@model arboldecisiones.ViewModels.TreeConfigDecisions
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @*estilos y script específicos de la vista*@
+    <script src="~/Scripts/Plugins/OrgChart/jquery.orgchart.js"></script>
+    <link href="~/Content/Plugins/OrgChart/jquery.orgchart.css" rel="stylesheet" />
+    @*librería del organigrama*@
+    <script src="~/Scripts/ScriptView/ModifyTreeOrgChart.js"></script>
+    <script src="~/Scripts/Plugins/OrgChart/html2canvas.min.js"></script>
+    <link href="~/Content/CSS/CSSView/ModifyTreeOrgChart.css" rel="stylesheet" />
+    @*Iconos de botón*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    @*BootstrapDialog*@
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/css/bootstrap-dialog.min.css">
+    @*libreria del editor de texto*@
+    <link rel="stylesheet" type="text/css" href="~/Scripts/editor.css">
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            var data = @Html.Raw(Json.Encode(@Model))
+                 loadTreeDecisions(data);
+        });
+        function ShowImagen(evt, outputID) {
+            var files = evt.files; // FileList object
+            // Obtenemos la imagen del campo "file".
+            for (var i = 0, f; f = files[i]; i++) {
+                //validar si es imagen o video(mp4 - MPEG)
+
+                if ((!f.type.match('image.*')) && (!f.type.match('video/MPEG')) && (!f.type.match('video/mp4'))) {
+                    alert("El archivo seleccionado no es valido solo se permite imágenes y vídeo (MPEG,MP4)");
+                } else {
+                    //Solo imágenes.
+                    if (f.type.match('image.*')) {
+                        var sizeT = FileSize(f.size, "imagen");
+
+                        if (sizeT) {
+
+                            var reader = new FileReader();
+                            reader.onload = (function (theFile) {
+                                return function (e) {
+                                    // Insertamos la imagen
+                                    document.getElementById(outputID).innerHTML = ['<img class="MeasuredImage" src="', e.target.result, '" title="', escape(theFile.name), '"/>'].join('');
+                                };
+                            })(f);
+
+                            reader.readAsDataURL(f);
+                        }
+                    }
+
+                    //Solo Video.
+                    if (f.type.match('video/MPEG') || f.type.match('video/mp4')) {
+
+                        var sizeT = FileSize(f.size, "video");
+                        if (sizeT) {
+                            var fileUrl = window.URL.createObjectURL(f);
+                            document.getElementById(outputID).innerHTML = ['<video class="MeasuredVideo"controls><source src="', fileUrl, '">.</video>'].join('');
+                        }
+
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <div class="panel panel-primary">
+            <div class="panel-heading titlesMain">Ingresar Defecto</div>
+            <div class="panel-body">
+                <div id="chart-container"></div>
+            </div>
+            <input type="button" id="removeTree" value="Eliminar" class="btn btn-danger" />
+        </div>
+    </div>
+</body>
+</html>
+<input type="text" id="selected-node" hidden>
+
+<!-- Modal Defect -->
+<div class="modal fade" id="ModalDefect" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="col-xs-8 col-sm-8 col-md-8">
+                        <h5 class="modal-title titlesMain" id="ModalLongTitleDefect">Defecto</h5>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="divTreeConfiguration">
+                    <div class="form-horizontal">
+                        <div class="row">
+                            <div class="col-xs-4 col-sm-4 col-md-4">
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Defecto:</label>
+                                    <div class="col-md-9">
+                                        @Html.DropDownList("DefectID", null, htmlAttributes: new { @class = "form-control" })
+                                        <span class="error">Debe Seleccionar una Defecto</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Ubicación:</label>
+                                    <div class="col-md-9">
+                                        @Html.DropDownList("LocationID", null, htmlAttributes: new { @class = "form-control" })
+                                        <span class="error">Debe Seleccionar una Ubicación</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Categoría:</label>
+                                    <div class="col-md-9">
+                                        @Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })
+                                        <span class="error">Debe Seleccionar una Categoría</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-horizontal">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-1">Definición:</label>
+                                    <div class="col-md-11">
+                                        <textarea id="textDefinicion" class="textDefinicion form-control" maxlength="500"></textarea>
+                                        <script type='text/javascript'>
+                                            CKEDITOR.replace('textDefinicion');
+                                        </script>
+                                        <span class="error">Debe de ingresar la definición, mínimo 4 caracteres</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="imageConfig">
+                        <div class="col-md-12">
+                            <table class="table table-responsive" style="margin-bottom: -12px">
+                                <tr>
+                                    <td> <label class="control-label">Buscar</label></td>
+                                    <td> <label class="control-label">Imagen</label></td>
+                                    <td> <label class="control-label">Descripción</label></td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr class="mycontainer" id="mainrowConfig">
+
+                                    <td width="80px">
+                                        <span id="fileSpanConfig" class="btn btn-primary btn-file glyphicon glyphicon-search">
+                                            <input type="file" id="filesConfig" class="filesConfig" name="files" onchange="ShowImagen(this,'listConfig')" accept="image/*,.MPEG,.mp4" />
+                                        </span>
+                                    </td>
+                                    <td width="128px">
+                                        <output id="listConfig" class="listConfig"></output>
+                                        <span class="error">Debe Seleccionar una Imagen</span>
+                                    </td>
+                                    <td width="700px">
+                                        <div id="editordiv">
+                                            <textarea name="campoeditor" id="campoeditor" class="campoeditor ckeditor form-control" maxlength="500" style="height: 80px;"></textarea>
+                                        </div>
+                                        <div id="descripcionConfig" name="descripcionConfig" class="descripcionConfig scrollDescripcionHtml">
+                                        </div>
+                                    </td>
+                                    <td width="80px">
+                                        <input type="button" id="addConfig" value="Guardar" style="width:80px" class="btn btn-success" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div id="listCausa">
+                            <div class="col-md-12">
+                                <table class="table table-responsive" id="ConfigImagenAdd"><tbody></tbody></table>
+                            </div>
+                            <span id="ConfigError" style="color:red"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="border:0px">
+                <button id="btnUpdateDefect" type="button" class="btn btn-secondary"><i class="fa fa-arrow-circle-right fa-1x"></i> Modificar</button>
+                <button id="btnAddDecisionsDefect" type="button" class="btn btn-primary">Nuevo</button>
+                <div class="container" id="progressModalDefect" style="display:none">
+                    <p>Guardando la información</p>
+                    <div class="progress">
+                        <div id="barProgressModalDefect" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:50%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalDecisions">
+        Decisions
+    </button>*@
+<!-- Modal Decisions -->
+<div class="modal fade" id="ModalDecisions" style="overflow-y: auto;" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitleDecisions" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="col-xs-8 col-sm-8 col-md-8">
+                        <h5 class="modal-title titlesMain" id="ModalLongTitleDecisions">Decisiones</h5>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="fieldsCause" class="fieldsCause">
+                    <div class="form-horizontal">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <fieldset>
+                                    <div class="col-xs-10 col-sm-10 col-md-10">
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <input type="radio" id="Causa"
+                                                   name="type" value="Causa" checked />
+                                            <label for="Cause">Causa</label>
+                                        </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <input type="radio" id="Solucion"
+                                                   name="type" value="Solución" />
+                                            <label for="Solution">Solución</label>
+                                        </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <input type="radio" id="Decision"
+                                                   name="type" value="Decisión" />
+                                            <label for="Decision">Decisión</label>
+                                        </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <input type="radio" id="Union"
+                                                   name="type" value="Unión" />
+                                            <label for="Union">Unión</label>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12" style="padding-top: 10px;">
+                                <div class="form-group">
+                                    <div class="col-md-1">
+                                        <label class="control-label">Titulo:</label>
+                                    </div>
+                                    <div class="col-md-11">
+                                        <textarea id="txtTitleCause" class="txtTitleCause form-control txt-tittle" maxlength="50"></textarea>
+                                        <span class="error">Debe ingresar el titulo, mínimo 4 caracteres</span>
+                                    </div>
+                                    <div style="display:none">
+                                        <div class="control-label col-md-1">
+                                            <label class="control-label">Activo:</label>
+                                        </div>
+                                        <div class="col-md-1 checkbox">
+                                            <div class="checkbox">
+                                                <input type="checkbox" checked="checked" id="ckbACtivoCause" class="ckbACtivoCause" name="ckbACtivoCause">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-horizontal">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-1" style="width:75px">Descripción:</label>
+                                    <div class="col-md-12">
+                                        <textarea id="textDescriptionCause" class="textDescriptionCause form-control ckeditor" maxlength="900"></textarea>
+                                        <span class="error">Debe ingresar el descrición, mínimo 4 caracteres</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="imageCause">
+
+                        <div class="col-md-12">
+                            <table class="tableCause table table-responsive" style="margin-bottom: -12px" id="tableCause">
+                                <tr>
+                                    <td><label class="control-label">Buscar</label></td>
+                                    <td><label class="control-label">Imagen</label></td>
+                                    <td><label class="control-label">Descripción</label></td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr class="mycontainer" id="mainrowCause">
+                                    <td width="80px">
+                                        <span id="fileSpanCause" class="btn btn-primary btn-file glyphicon glyphicon-search">
+                                            <input type="file" id="filesCause" class="filesCause" name="files" onchange="ShowImagen(this,'listCause')" />
+                                        </span>
+                                    </td>
+                                    <td width="128px">
+                                        <output id="listCause" class="listCause"></output>
+                                        <span class="error">Debe Seleccionar una Imagen</span>
+                                    </td>
+                                    <td width="700px">
+
+                                        <div id="editordivDescripCause">
+                                            <textarea name="campEditDescripCause" id="campEditDescripCause" class="campEditDescripCause ckeditor form-control" maxlength="500" style="height: 80px;"></textarea>
+                                        </div>
+
+                                        <div id="descripcionCause" name="descripcionCause" class="descripcionCause scrollDescripcionHtml">
+                                        </div>
+                                    </td>
+                                    <td width="80px">
+                                        <input type="button" id="addCause" value="Agregar" style="width:80px" class="addCause btn btn-success" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div id="listCausa">
+                            <div class="col-md-12">
+                                <table class="causeImagenAdd table table-responsive" id="causeImagenAdd"><tbody></tbody></table>
+                                <span id="causeError" style="color:red"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div> @*Fin fieldsCause*@
+            </div>
+            <div class="modal-footer" style="border:0px">
+                @*<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>*@
+                <button id="btnDecisions" type="button" class="btn btn-secondary"><i class="fa fa-arrow-circle-right fa-1x"></i> Guardar</button>
+                <button id="btnUpdateDecisions" type="button" class="btn btn-secondary" style="display: none;"><i class="fa fa-arrow-circle-right fa-1x"></i> Modificar</button>
+                <button id="btnAddDecisions" type="button" class="btn btn-primary" style="display: none;">Nuevo</button>
+                <button id="btnAddJoinDecision" type="button" class="btn btn-primary" style="display: none;">Asociar decisión</button>
+                <button id="btnRemoveDecisions" type="button" class="btn btn-danger">Eliminar</button>
+                <div class="container" id="progressModalDecisions" style="display:none">
+                    <p>Guardando la información</p>
+                    <div class="progress">
+                        <div id="barProgressModalDecisions" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:50%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal join decisions -->
+<div class="modal fade" id="ModalJoin" tabindex="-1" role="dialog" aria-labelledby="ModalLongTitleJoin" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="col-xs-8 col-sm-8 col-md-8">
+                        <h5 class="modal-title titlesMain" id="ModalLongTitleJoin">Asociar Decisión</h5>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <div class="col-xs-6 col-sm-6 col-md-6 ">
+                                <label class="control-label">Seleccionar decisión:</label>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 ">
+                                <select id="cbxDecisions" class="form-control" style="width: 250px;">
+                                    <option value="0">Seleccione Decisión</option>
+                                </select>
+                                <span class="error">Debe seleccionar un Decisión</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="infoShowDecision" class="row" style="display: none;">
+                    <div class="form-horizontal">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label class="control-label">Tipo:</label>
+                                    <label id="lblTypeShow" class="control-label">xxxxxxx</label>
+                                    <hr class="separator" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="spacing">
+                            <div class="row">
+                                <div class="form-horizontal">
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <div class="col-md-1">
+                                                <label class="control-label">Titulo:</label>
+                                            </div>
+                                            <div class="col-md-11">
+                                                <textarea id="txtTitleShow" class="form-control txt-tittle" disabled></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-horizontal">
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-1" style="width:85px">Descripción:</label>
+                                            <div class="col-md-12">
+                                                <div id="textDescriptionShow" name="textDescriptionShow" class="textDescriptionShow scrollDescripcionHtml">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="border:0px">
+                @*<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>*@
+                <button id="btnGuardarJoin" type="button" class="btn btn-secondary"><i class="fa fa-arrow-circle-right fa-1x"></i>Guardar</button>
+                <button id="btnRemoveJoin" type="button" class="btn btn-danger" style="display: none;">Eliminar</button>
+            </div>
+        </div>
+    </div>
+    @Html.Hidden("RedirectTo", Url.Action("SearchDefect", "ModifyTree"));

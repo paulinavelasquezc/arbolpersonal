@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "TreeDecisions";
+}
+
+<h2>TreeDecisions</h2>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.js"></script>
+    <script src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart','orgchart']}]}"></script>
+    <script src="~/Scripts/ScriptView/TreeDecisions.js"></script>
+    <style>
+        #chart table {
+            border-spacing: 0;
+            border-collapse: separate;
+        }
+
+        #chart tr td {
+            line-height: 15px;
+        }
+
+        .title {
+            color: red;
+        }
+
+        .google-visualization--orgchart-node-medium {
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body ng-app="myApp">
+    <div ng-controller="myController">
+        <h2>Google Organization chart using AngularJS</h2>
+        <div id="chart" ng-model="chartData" org-chart="chartData" style="text-align:center">
+            Please Wait...
+        </div>
+    </div>
+</body>
+</html>
